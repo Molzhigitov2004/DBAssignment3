@@ -40,6 +40,7 @@ function closeForm(formId) {
 
 // --- API Helper ---
 async function apiRequest(endpoint, method = 'GET', body = null) {
+    if (!endpoint.endsWith('/')) endpoint += '/'; 
     const options = {
         method: method,
         headers: { 'Content-Type': 'application/json' }
