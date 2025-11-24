@@ -8,8 +8,9 @@ from database import get_db
 import models
 import schemas
 
+from fastapi.staticfiles import StaticFiles
 app = FastAPI(title="Caregiver Platform API")
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,
