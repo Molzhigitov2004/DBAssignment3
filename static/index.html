@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar -->
         <nav class="sidebar">
             <h2>CarePlatform</h2>
             <ul>
@@ -21,284 +21,195 @@
             </ul>
         </nav>
 
-        <!-- Main Content Area -->
         <main class="content">
             
-            <!-- SECTION: USERS -->
+            <!-- 1. USERS -->
             <section id="users-section" class="tab-content active">
                 <div class="header-row">
                     <h1>Manage Users</h1>
-                    <button class="btn-primary" onclick="toggleForm('user-form-container')">+ Add User</button>
+                    <button class="btn-primary" onclick="openForm('user-form-container')">+ Add User</button>
                 </div>
                 <div id="user-form-container" class="form-container hidden">
-                    <h3 id="user-form-title">Add New User</h3>
+                    <h3 id="user-form-title">User Details</h3>
                     <form id="user-form">
                         <input type="hidden" id="user_id">
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="email" required>
+                            <label>Email</label><input type="email" id="email" required>
                         </div>
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>Given Name</label>
-                                <input type="text" id="given_name" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Surname</label>
-                                <input type="text" id="surname" required>
-                            </div>
+                            <div class="form-group"><label>Given Name</label><input type="text" id="given_name" required></div>
+                            <div class="form-group"><label>Surname</label><input type="text" id="surname" required></div>
                         </div>
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>City</label>
-                                <input type="text" id="city">
-                            </div>
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" id="phone_number">
-                            </div>
+                            <div class="form-group"><label>City</label><input type="text" id="city"></div>
+                            <div class="form-group"><label>Phone</label><input type="text" id="phone_number"></div>
                         </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="password" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="profile_description"></textarea>
-                        </div>
+                        <div class="form-group"><label>Password</label><input type="password" id="password" required></div>
+                        <div class="form-group"><label>Description</label><textarea id="profile_description"></textarea></div>
                         <button type="submit" class="btn-success">Save User</button>
-                        <button type="button" class="btn-secondary" onclick="toggleForm('user-form-container')">Cancel</button>
+                        <button type="button" class="btn-secondary" onclick="closeForm('user-form-container')">Cancel</button>
                     </form>
                 </div>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th><th>Name</th><th>Email</th><th>City</th><th>Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>City</th><th>Actions</th></tr></thead>
                     <tbody id="users-table-body"></tbody>
                 </table>
             </section>
 
-            <!-- SECTION: CAREGIVERS -->
+            <!-- 2. CAREGIVERS -->
             <section id="caregivers-section" class="tab-content">
                 <div class="header-row">
-                    <h1>Caregiver Profiles</h1>
-                    <button class="btn-primary" onclick="toggleForm('caregiver-form-container')">+ Add Profile</button>
+                    <h1>Caregivers</h1>
+                    <button class="btn-primary" onclick="openForm('caregiver-form-container')">+ Add Profile</button>
                 </div>
                 <div id="caregiver-form-container" class="form-container hidden">
-                    <h3>Add/Edit Caregiver</h3>
+                    <h3 id="cg-form-title">Caregiver Details</h3>
                     <form id="caregiver-form">
+                        <!-- We use this to know if we are editing -->
+                        <input type="hidden" id="cg_is_edit" value="false">
+                        
                         <div class="form-group">
                             <label>User ID (Must exist in Users)</label>
                             <input type="number" id="cg_user_id" required>
                         </div>
                         <div class="form-group">
-                            <label>Caregiving Type</label>
+                            <label>Type</label>
                             <select id="cg_type">
                                 <option value="babysitter">Babysitter</option>
                                 <option value="caregiver for elderly">Caregiver for Elderly</option>
                                 <option value="playmate for children">Playmate for Children</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Hourly Rate</label>
-                            <input type="number" step="0.01" id="cg_hourly_rate" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Gender</label>
-                            <select id="cg_gender">
-                                <option value="Female">Female</option>
-                                <option value="Male">Male</option>
-                            </select>
+                        <div class="form-grid">
+                            <div class="form-group"><label>Hourly Rate</label><input type="number" step="0.01" id="cg_hourly_rate" required></div>
+                            <div class="form-group"><label>Gender</label>
+                                <select id="cg_gender">
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                </select>
+                            </div>
                         </div>
                         <button type="submit" class="btn-success">Save Profile</button>
-                        <button type="button" class="btn-secondary" onclick="toggleForm('caregiver-form-container')">Cancel</button>
+                        <button type="button" class="btn-secondary" onclick="closeForm('caregiver-form-container')">Cancel</button>
                     </form>
                 </div>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>User ID</th><th>Type</th><th>Rate</th><th>Gender</th><th>Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>User ID</th><th>Type</th><th>Rate</th><th>Gender</th><th>Actions</th></tr></thead>
                     <tbody id="caregivers-table-body"></tbody>
                 </table>
             </section>
 
-            <!-- SECTION: MEMBERS & ADDRESS -->
+            <!-- 3. MEMBERS -->
             <section id="members-section" class="tab-content">
                 <div class="header-row">
                     <h1>Members & Addresses</h1>
-                    <button class="btn-primary" onclick="toggleForm('member-form-container')">+ Add Member Profile</button>
+                    <button class="btn-primary" onclick="openForm('member-form-container')">+ Add Member</button>
                 </div>
-
                 <div id="member-form-container" class="form-container hidden">
-                    <h3>Member Details</h3>
+                    <h3 id="mem-form-title">Member Details</h3>
                     <form id="member-form">
+                        <input type="hidden" id="mem_is_edit" value="false">
+                        
                         <div class="form-group">
                             <label>User ID (Must exist in Users)</label>
                             <input type="number" id="mem_user_id" required>
                         </div>
-                        <div class="form-group">
-                            <label>Dependent Description</label>
-                            <textarea id="mem_desc" placeholder="e.g., I have a 5-year old son..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>House Rules</label>
-                            <textarea id="mem_rules" placeholder="e.g., No smoking..."></textarea>
-                        </div>
-                        
-                        <hr style="margin: 15px 0;">
-                        <h4>Address (Optional)</h4>
+                        <div class="form-group"><label>Description</label><textarea id="mem_desc"></textarea></div>
+                        <div class="form-group"><label>House Rules</label><textarea id="mem_rules"></textarea></div>
+                        <hr>
+                        <h4>Address</h4>
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>House Number</label>
-                                <input type="text" id="addr_house">
-                            </div>
-                            <div class="form-group">
-                                <label>Street</label>
-                                <input type="text" id="addr_street">
-                            </div>
+                            <div class="form-group"><label>House #</label><input type="text" id="addr_house"></div>
+                            <div class="form-group"><label>Street</label><input type="text" id="addr_street"></div>
                         </div>
-                        <div class="form-group">
-                            <label>Town</label>
-                            <input type="text" id="addr_town">
-                        </div>
+                        <div class="form-group"><label>Town</label><input type="text" id="addr_town"></div>
 
                         <button type="submit" class="btn-success">Save Member</button>
-                        <button type="button" class="btn-secondary" onclick="toggleForm('member-form-container')">Cancel</button>
+                        <button type="button" class="btn-secondary" onclick="closeForm('member-form-container')">Cancel</button>
                     </form>
                 </div>
-
                 <table>
-                    <thead>
-                        <tr>
-                            <th>User ID</th><th>Description</th><th>Rules</th><th>Address</th><th>Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>User ID</th><th>Description</th><th>Rules</th><th>Address</th><th>Actions</th></tr></thead>
                     <tbody id="members-table-body"></tbody>
                 </table>
             </section>
 
-            <!-- SECTION: JOBS -->
+            <!-- 4. JOBS -->
             <section id="jobs-section" class="tab-content">
                 <div class="header-row">
-                    <h1>Manage Jobs</h1>
-                    <button class="btn-primary" onclick="toggleForm('job-form-container')">+ Post Job</button>
+                    <h1>Jobs</h1>
+                    <button class="btn-primary" onclick="openForm('job-form-container')">+ Post Job</button>
                 </div>
                 <div id="job-form-container" class="form-container hidden">
-                    <h3>Post New Job</h3>
+                    <h3 id="job-form-title">Job Details</h3>
                     <form id="job-form">
                         <input type="hidden" id="job_id">
-                        <div class="form-group">
-                            <label>Member User ID</label>
-                            <input type="number" id="job_member_id" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Required Type</label>
+                        <div class="form-group"><label>Member ID</label><input type="number" id="job_member_id" required></div>
+                        <div class="form-group"><label>Type</label>
                             <select id="required_caregiving_type">
                                 <option value="babysitter">Babysitter</option>
                                 <option value="caregiver for elderly">Caregiver for Elderly</option>
                                 <option value="playmate for children">Playmate for Children</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Requirements</label>
-                            <textarea id="other_requirements"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Date Posted</label>
-                            <input type="date" id="date_posted" required>
-                        </div>
+                        <div class="form-group"><label>Requirements</label><textarea id="other_requirements"></textarea></div>
+                        <div class="form-group"><label>Date Posted</label><input type="date" id="date_posted" required></div>
                         <button type="submit" class="btn-success">Save Job</button>
-                        <button type="button" class="btn-secondary" onclick="toggleForm('job-form-container')">Cancel</button>
+                        <button type="button" class="btn-secondary" onclick="closeForm('job-form-container')">Cancel</button>
                     </form>
                 </div>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Job ID</th><th>Member ID</th><th>Type</th><th>Date</th><th>Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>ID</th><th>Member ID</th><th>Type</th><th>Date</th><th>Actions</th></tr></thead>
                     <tbody id="jobs-table-body"></tbody>
                 </table>
             </section>
 
-            <!-- SECTION: JOB APPLICATIONS -->
+            <!-- 5. APPLICATIONS -->
             <section id="applications-section" class="tab-content">
                 <div class="header-row">
                     <h1>Job Applications</h1>
-                    <button class="btn-primary" onclick="toggleForm('app-form-container')">+ New Application</button>
+                    <button class="btn-primary" onclick="openForm('app-form-container')">+ Apply</button>
                 </div>
                 <div id="app-form-container" class="form-container hidden">
-                    <h3>Apply for Job</h3>
+                    <h3 id="app-form-title">Application Details</h3>
                     <form id="application-form">
+                        <input type="hidden" id="app_is_edit" value="false">
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>Caregiver ID</label>
-                                <input type="number" id="app_cg_id" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Job ID</label>
-                                <input type="number" id="app_job_id" required>
-                            </div>
+                            <div class="form-group"><label>Caregiver ID</label><input type="number" id="app_cg_id" required></div>
+                            <div class="form-group"><label>Job ID</label><input type="number" id="app_job_id" required></div>
                         </div>
-                        <div class="form-group">
-                            <label>Date Applied</label>
-                            <input type="date" id="app_date" required>
-                        </div>
-                        <button type="submit" class="btn-success">Submit Application</button>
-                        <button type="button" class="btn-secondary" onclick="toggleForm('app-form-container')">Cancel</button>
+                        <div class="form-group"><label>Date Applied</label><input type="date" id="app_date" required></div>
+                        <button type="submit" class="btn-success">Submit</button>
+                        <button type="button" class="btn-secondary" onclick="closeForm('app-form-container')">Cancel</button>
                     </form>
                 </div>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Caregiver ID</th><th>Job ID</th><th>Date Applied</th><th>Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Caregiver ID</th><th>Job ID</th><th>Date Applied</th><th>Actions</th></tr></thead>
                     <tbody id="applications-table-body"></tbody>
                 </table>
             </section>
 
-            <!-- SECTION: APPOINTMENTS -->
+            <!-- 6. APPOINTMENTS -->
             <section id="appointments-section" class="tab-content">
                 <div class="header-row">
                     <h1>Appointments</h1>
-                    <button class="btn-primary" onclick="toggleForm('apt-form-container')">+ New Appointment</button>
+                    <button class="btn-primary" onclick="openForm('apt-form-container')">+ Schedule</button>
                 </div>
                 <div id="apt-form-container" class="form-container hidden">
-                    <h3>Schedule Appointment</h3>
+                    <h3 id="apt-form-title">Appointment Details</h3>
                     <form id="appointment-form">
                         <input type="hidden" id="apt_id">
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>Caregiver ID</label>
-                                <input type="number" id="apt_cg_id" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Member ID</label>
-                                <input type="number" id="apt_mem_id" required>
-                            </div>
+                            <div class="form-group"><label>Caregiver ID</label><input type="number" id="apt_cg_id" required></div>
+                            <div class="form-group"><label>Member ID</label><input type="number" id="apt_mem_id" required></div>
                         </div>
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>Date</label>
-                                <input type="date" id="apt_date" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Time</label>
-                                <input type="time" id="apt_time" required>
-                            </div>
+                            <div class="form-group"><label>Date</label><input type="date" id="apt_date" required></div>
+                            <div class="form-group"><label>Time</label><input type="time" id="apt_time" required></div>
                         </div>
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label>Hours</label>
-                                <input type="number" id="apt_hours" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Status</label>
+                            <div class="form-group"><label>Hours</label><input type="number" id="apt_hours" required></div>
+                            <div class="form-group"><label>Status</label>
                                 <select id="apt_status">
                                     <option value="Pending">Pending</option>
                                     <option value="Accepted">Accepted</option>
@@ -307,15 +218,11 @@
                             </div>
                         </div>
                         <button type="submit" class="btn-success">Save Appointment</button>
-                        <button type="button" class="btn-secondary" onclick="toggleForm('apt-form-container')">Cancel</button>
+                        <button type="button" class="btn-secondary" onclick="closeForm('apt-form-container')">Cancel</button>
                     </form>
                 </div>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th><th>Caregiver</th><th>Member</th><th>Date/Time</th><th>Status</th><th>Actions</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>ID</th><th>Caregiver</th><th>Member</th><th>When</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody id="appointments-table-body"></tbody>
                 </table>
             </section>
