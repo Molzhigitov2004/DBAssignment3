@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from datetime import date
+from fastapi.staticfiles import StaticFiles
 
 from database import get_db
 import models
@@ -9,9 +11,13 @@ import schemas
 app = FastAPI(title="Caregiver Platform API")
 
 
-@app.get("/")
-def root():
-    return {"message": "Caregiver API is running"}
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins (for development)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, PUT, DELETE)
+    allow_headers=["*"],  # Allows all headers
+)
 
 
 @app.post("/users/", response_model=schemas.UserRead)
@@ -427,3 +433,5 @@ def delete_appointment(appointment_id: int, db: Session = Depends(get_db)):
     db.delete(ap)
     db.commit()
     return {"detail": "Appointment deleted"}
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
