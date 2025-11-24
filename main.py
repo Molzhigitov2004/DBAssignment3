@@ -46,14 +46,14 @@ def list_users(db: Session = Depends(get_db)):
     users = db.query(models.User).all()
     return users
 
-@app.get("/users/{user_id}", response_model=schemas.UserRead)
+@app.get("/users/{user_id}/", response_model=schemas.UserRead)
 def get_user(user_id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.user_id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-@app.put("/users/{user_id}", response_model=schemas.UserRead)
+@app.put("/users/{user_id}/", response_model=schemas.UserRead)
 def update_user(user_id: int, data: schemas.UserUpdate, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.user_id == user_id).first()
     if not user:
@@ -66,7 +66,7 @@ def update_user(user_id: int, data: schemas.UserUpdate, db: Session = Depends(ge
     db.refresh(user)
     return user
 
-@app.delete("/users/{user_id}")
+@app.delete("/users/{user_id}/")
 def delete_user(user_id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.user_id == user_id).first()
     if not user:
@@ -108,7 +108,7 @@ def create_caregiver(cg: schemas.CaregiverCreate, db: Session = Depends(get_db))
 def list_caregivers(db: Session = Depends(get_db)):
     return db.query(models.Caregiver).all()
 
-@app.get("/caregivers/{caregiver_user_id}", response_model=schemas.CaregiverRead)
+@app.get("/caregivers/{caregiver_user_id}/", response_model=schemas.CaregiverRead)
 def get_caregiver(caregiver_user_id: int, db: Session = Depends(get_db)):
     cg = db.query(models.Caregiver).filter(
         models.Caregiver.caregiver_user_id == caregiver_user_id
@@ -117,7 +117,7 @@ def get_caregiver(caregiver_user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Caregiver not found")
     return cg
 
-@app.put("/caregivers/{caregiver_user_id}", response_model=schemas.CaregiverRead)
+@app.put("/caregivers/{caregiver_user_id}/", response_model=schemas.CaregiverRead)
 def update_caregiver(caregiver_user_id: int, data: schemas.CaregiverUpdate, db: Session = Depends(get_db)):
     cg = db.query(models.Caregiver).filter(
         models.Caregiver.caregiver_user_id == caregiver_user_id
@@ -132,7 +132,7 @@ def update_caregiver(caregiver_user_id: int, data: schemas.CaregiverUpdate, db: 
     db.refresh(cg)
     return cg
 
-@app.delete("/caregivers/{caregiver_user_id}")
+@app.delete("/caregivers/{caregiver_user_id}/")
 def delete_caregiver(caregiver_user_id: int, db: Session = Depends(get_db)):
     cg = db.query(models.Caregiver).filter(
         models.Caregiver.caregiver_user_id == caregiver_user_id
@@ -183,7 +183,7 @@ def create_member(member: schemas.MemberCreate, db: Session = Depends(get_db)):
 def list_members(db: Session = Depends(get_db)):
     return db.query(models.Member).all()
 
-@app.get("/members/{member_user_id}", response_model=schemas.MemberRead)
+@app.get("/members/{member_user_id}/", response_model=schemas.MemberRead)
 def get_member(member_user_id: int, db: Session = Depends(get_db)):
     m = db.query(models.Member).filter(
         models.Member.member_user_id == member_user_id
@@ -192,7 +192,7 @@ def get_member(member_user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Member not found")
     return m
 
-@app.put("/members/{member_user_id}", response_model=schemas.MemberRead)
+@app.put("/members/{member_user_id}/", response_model=schemas.MemberRead)
 def update_member(member_user_id: int, data: schemas.MemberUpdate, db: Session = Depends(get_db)):
     m = db.query(models.Member).filter(
         models.Member.member_user_id == member_user_id
@@ -223,7 +223,7 @@ def update_member(member_user_id: int, data: schemas.MemberUpdate, db: Session =
     db.refresh(m)
     return m
 
-@app.delete("/members/{member_user_id}")
+@app.delete("/members/{member_user_id}/")
 def delete_member(member_user_id: int, db: Session = Depends(get_db)):
     m = db.query(models.Member).filter(
         models.Member.member_user_id == member_user_id
@@ -258,14 +258,14 @@ def create_job(job: schemas.JobCreate, db: Session = Depends(get_db)):
 def list_jobs(db: Session = Depends(get_db)):
     return db.query(models.Job).all()
 
-@app.get("/jobs/{job_id}", response_model=schemas.JobRead)
+@app.get("/jobs/{job_id}/", response_model=schemas.JobRead)
 def get_job(job_id: int, db: Session = Depends(get_db)):
     job = db.query(models.Job).filter(models.Job.job_id == job_id).first()
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
     return job
 
-@app.put("/jobs/{job_id}", response_model=schemas.JobRead)
+@app.put("/jobs/{job_id}/", response_model=schemas.JobRead)
 def update_job(job_id: int, data: schemas.JobUpdate, db: Session = Depends(get_db)):
     job = db.query(models.Job).filter(models.Job.job_id == job_id).first()
     if not job:
@@ -279,7 +279,7 @@ def update_job(job_id: int, data: schemas.JobUpdate, db: Session = Depends(get_d
     return job
 
 
-@app.delete("/jobs/{job_id}")
+@app.delete("/jobs/{job_id}/")
 def delete_job(job_id: int, db: Session = Depends(get_db)):
     job = db.query(models.Job).filter(models.Job.job_id == job_id).first()
     if not job:
@@ -326,7 +326,7 @@ def create_job_application(app_data: schemas.JobApplicationCreate, db: Session =
 def list_job_applications(db: Session = Depends(get_db)):
     return db.query(models.JobApplication).all()
 
-@app.get("/job_applications/{caregiver_user_id}/{job_id}", response_model=schemas.JobApplicationRead)
+@app.get("/job_applications/{caregiver_user_id}/{job_id}/", response_model=schemas.JobApplicationRead)
 def get_job_application(caregiver_user_id: int, job_id: int, db: Session = Depends(get_db)):
     app = db.query(models.JobApplication).filter(
         models.JobApplication.caregiver_user_id == caregiver_user_id,
@@ -336,7 +336,7 @@ def get_job_application(caregiver_user_id: int, job_id: int, db: Session = Depen
         raise HTTPException(status_code=404, detail="Application not found")
     return app
 
-@app.put("/job_applications/{caregiver_user_id}/{job_id}", response_model=schemas.JobApplicationRead)
+@app.put("/job_applications/{caregiver_user_id}/{job_id}/", response_model=schemas.JobApplicationRead)
 def update_job_application(caregiver_user_id: int, job_id: int, data: schemas.JobApplicationUpdate,
                            db: Session = Depends(get_db)):
     app = db.query(models.JobApplication).filter(
@@ -353,7 +353,7 @@ def update_job_application(caregiver_user_id: int, job_id: int, data: schemas.Jo
     db.refresh(app)
     return app
 
-@app.delete("/job_applications/{caregiver_user_id}/{job_id}")
+@app.delete("/job_applications/{caregiver_user_id}/{job_id}/")
 def delete_job_application(caregiver_user_id: int, job_id: int, db: Session = Depends(get_db)):
     app = db.query(models.JobApplication).filter(
         models.JobApplication.caregiver_user_id == caregiver_user_id,
@@ -399,7 +399,7 @@ def create_appointment(ap: schemas.AppointmentCreate, db: Session = Depends(get_
 def list_appointments(db: Session = Depends(get_db)):
     return db.query(models.Appointment).all()
 
-@app.get("/appointments/{appointment_id}", response_model=schemas.AppointmentRead)
+@app.get("/appointments/{appointment_id}/", response_model=schemas.AppointmentRead)
 def get_appointment(appointment_id: int, db: Session = Depends(get_db)):
     ap = db.query(models.Appointment).filter(
         models.Appointment.appointment_id == appointment_id
@@ -408,7 +408,7 @@ def get_appointment(appointment_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Appointment not found")
     return ap
 
-@app.put("/appointments/{appointment_id}", response_model=schemas.AppointmentRead)
+@app.put("/appointments/{appointment_id}/", response_model=schemas.AppointmentRead)
 def update_appointment(appointment_id: int, data: schemas.AppointmentUpdate, db: Session = Depends(get_db)):
     ap = db.query(models.Appointment).filter(
         models.Appointment.appointment_id == appointment_id
@@ -423,7 +423,7 @@ def update_appointment(appointment_id: int, data: schemas.AppointmentUpdate, db:
     db.refresh(ap)
     return ap
 
-@app.delete("/appointments/{appointment_id}")
+@app.delete("/appointments/{appointment_id}/")
 def delete_appointment(appointment_id: int, db: Session = Depends(get_db)):
     ap = db.query(models.Appointment).filter(
         models.Appointment.appointment_id == appointment_id
